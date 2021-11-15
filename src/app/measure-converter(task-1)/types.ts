@@ -1,12 +1,17 @@
-type Measure = "mm" | "cm" | "m" | "km" | "in" | "ft" | "yd";
+export type Measure = "mm" | "cm" | "m" | "km" | "in" | "ft" | "yd";
 
-export type TConfig = {
-      [key in Measure]?: TConfigItem
+export type TConfig<T = TConfigItem> = {
+      [key in Measure]?: T
 }
 
-type TConfigItem = {
+export type TConfigItem = {
       [key in Measure]?: number 
 }
+
+export type TConfigExtendedItem = TConfigItem & {
+      config_extend: [Measure, number][]
+}
+
 
 export interface IInputData {
       distance: IDistance;
