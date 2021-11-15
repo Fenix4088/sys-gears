@@ -2,24 +2,26 @@ import config from './config.json';
 import input from './input.json';
 import extendConfig from "./extend_config.json";
 
-import {TConfig, IInputData, TConfigExtendedItem, Measure, TConfigItem} from "./types";
+import {TConfig, TInputConfig, TConfigExtendedItem, Measure, TConfigItem, ISimpleConfig, IComplicateConfig} from "./types";
 
+console.log(input);
 
 class MeasureConverter {
       private config: TConfig;
-      private input: IInputData;
+      private input: TInputConfig;
       private extendConfig?: TConfig<TConfigExtendedItem>; 
 
-      constructor(config: TConfig, input: IInputData, extendConfig?: TConfig<TConfigExtendedItem>) {
+      constructor(config: TConfig, input: TInputConfig, extendConfig?: TConfig<TConfigExtendedItem>) {
             this.config = config;
             this.input = input;
             this.extendConfig = extendConfig;           
       }
 
       public init() {
-            const {mergeConfigs, config, extendConfig} = this;
+            const {mergeConfigs, config, extendConfig, configTypeChecker, input} = this;
 
             mergeConfigs(config, extendConfig);
+            const test = configTypeChecker(input);
 
       }
 
@@ -52,7 +54,55 @@ class MeasureConverter {
             }, config)
 
       }
+
+
+      private isComplicateConfig = (input: TInputConfig): input is IComplicateConfig => {
+          return (input as IComplicateConfig).inputData !== undefined;
+      }
+
+      //TODO: refactor to converter
+      private configTypeChecker = (input: TInputConfig): ISimpleConfig | IComplicateConfig  => {
+
+            if(this.isComplicateConfig(input)) {
+                  return input;
+            } else {
+                  return input;
+            }
+      } 
 }
 
-const converter = new MeasureConverter(config, input as IInputData, extendConfig as TConfig<TConfigExtendedItem>);
+const converter = new MeasureConverter(config, input as TInputConfig, extendConfig as TConfig<TConfigExtendedItem>);
+
 converter.init();
+
+
+
+
+// {
+//       "distance": {
+//                   "unit": "m", 
+//                   "value": 0.5
+//             }, 
+//       "convert_to": "ft"
+// }
+
+
+
+// {
+//       "inputData": [
+//       {      
+//             "distance": {
+//                   "unit": "m", 
+//                   "value": 0.5
+//             }, 
+//             "convert_to": "ft"
+//       },
+//       {      
+//             "distance": {
+//                   "unit": "m", 
+//                   "value": 0.5
+//             }, 
+//             "convert_to": "ft"
+//       }
+// ]
+// }

@@ -13,12 +13,21 @@ export type TConfigExtendedItem = TConfigItem & {
 }
 
 
-export interface IInputData {
-      distance: IDistance;
-      convert_to: Measure;
+//Input config variations types
+
+export type TInputConfig = ISimpleConfig | IComplicateConfig;
+
+export interface ISimpleConfig {
+      distance: IDistance,
+      convert_to: Measure
+}
+
+
+export interface IComplicateConfig {
+      inputData: ISimpleConfig[]
 }
 
 interface IDistance {
-      unit: Measure;
-      value: number;
+      unit: Measure,
+      value: number
 }
