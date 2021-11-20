@@ -1,7 +1,18 @@
 {
+  "inputData": [
+    {
       "distance": {
-                  "unit": "m", 
-                  "value": 0.5
-            }, 
+        "unit": "yd",
+        "value": 33
+      },
+      "convert_to": "km"
+    },
+    {
+      "distance": {
+        "unit": "mm",
+        "value": 1.25
+      },
       "convert_to": "ft"
+    }
+  ]
 }

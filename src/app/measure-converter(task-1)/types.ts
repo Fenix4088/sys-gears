@@ -1,33 +1,31 @@
-export type Measure = "mm" | "cm" | "m" | "km" | "in" | "ft" | "yd";
+export type Measure = 'mm' | 'cm' | 'm' | 'km' | 'in' | 'ft' | 'yd';
 
 export type TConfig<T = TConfigItem> = {
-      [key in Measure]?: T
-}
+  [key in Measure]?: T;
+};
 
 export type TConfigItem = {
-      [key in Measure]?: number 
-}
+  [key in Measure]?: number;
+};
 
 export type TConfigExtendedItem = TConfigItem & {
-      config_extend: [Measure, number][]
-}
-
+  config_extend: [Measure, number][];
+};
 
 //Input config variations types
 
 export type TInputConfig = ISimpleConfig | IComplicateConfig;
 
 export interface ISimpleConfig {
-      distance: IDistance,
-      convert_to: Measure
+  distance: IDistance;
+  convert_to: Measure;
 }
-
 
 export interface IComplicateConfig {
-      inputData: ISimpleConfig[]
+  inputData: ISimpleConfig[];
 }
 
-interface IDistance {
-      unit: Measure,
-      value: number
+export interface IDistance {
+  unit: Measure;
+  value: number;
 }
